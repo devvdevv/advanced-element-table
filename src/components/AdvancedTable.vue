@@ -38,11 +38,14 @@ https://element.eleme.io/#/en-US/component/table
           v-if="columns[column].header !== null"
         >
           <div
-            v-if="columns[column].header"
+            v-if="(typeof columns[column].formatter !== 'function')"
             :is="columns[column].header"
           >
-          {{column}}
-          <input type="text">
+          </div>
+          <div
+            v-else
+            :formatter="columns[column].header"
+          >
           </div>
         </template>
         <template
