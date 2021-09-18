@@ -1,24 +1,14 @@
-# advanced-element-table
+### Advanced Element Table
 
-## Project setup
-```
-npm install
-```
+Hi! Advanced Element Table - Dynamic Custom Table
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Using Element UI Framework and Vue 2.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+This project is just starting at very first step, so it doesn't support install from npm currently
 
-### Lints and fixes files
-```
-npm run lint
-```
+If you are using Element, that's great! You can use this on your project by coping source code.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Demo
+Here: https://devvdevv.github.io/advanced-element-table/
+
+Happy coding!
