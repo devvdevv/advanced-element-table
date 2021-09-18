@@ -1,27 +1,32 @@
 <template>
-  <div style="width: 800px; margin: auto;">
-    <advanced-table
-      :isLoading="isLoading"
-      :border="false"
-      :rows="rows"
-      :columns="columns"
-      :total="total"
-      :current="pageNum"
-      :pageSize="pageSize"
-      :p_background="true"
-      @onPageChange="onPageChange"
-    ></advanced-table>
+  <div style="width: 800px; margin: auto">
+    <el-card class="box-card">
+      <advanced-table
+        :isLoading="isLoading"
+        :border="false"
+        :rows="rows"
+        :columns="columns"
+        :total="total"
+        :current="pageNum"
+        :pageSize="pageSize"
+        :p_background="true"
+        @onPageChange="onPageChange"
+      ></advanced-table>
+    </el-card>
   </div>
 </template>
 
 <script>
-import AdvancedTable from '../components/AdvancedTable.vue';
-import { DATA } from './data'
-import FlagRendererVue from './renderers/FlagRenderer.vue';
+import AdvancedTable from "../components/AdvancedTable.vue";
+import { DATA } from "./data";
+import FlagRendererVue from "./renderers/FlagRenderer.vue";
 export default {
   components: { AdvancedTable },
   mounted() {
-    console.log("%cWOOHO~ If you see this means you are developer, thanks to eye on this :D", "font-weight: bold;");
+    console.log(
+      "%cWOOHO~ If you see this I guess you are developer, thanks to eye on this :D",
+      "font-weight: bold;"
+    );
     console.table(JSON.parse(JSON.stringify(DATA)));
     this.isLoading = true;
     setInterval(() => {
@@ -45,8 +50,8 @@ export default {
         country: {
           id: 4,
           label: "Country",
-          minWidth: 10, 
-          formatter: FlagRendererVue
+          minWidth: 10,
+          formatter: FlagRendererVue,
         },
         gold_medals: {
           id: 5,
