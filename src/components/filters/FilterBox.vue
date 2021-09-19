@@ -1,7 +1,7 @@
 <template>
   <el-popover
     placement="bottom"
-    title="Filter (developing, just 4 view)"
+    title="Filter (In development...)"
     width="200"
     trigger="manual"
     v-model="visible"
