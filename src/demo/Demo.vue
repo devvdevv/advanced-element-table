@@ -4,7 +4,7 @@
       <advanced-table
         :isLoading="isLoading"
         :border="false"
-        :rows="rows"
+        :rows.sync="rows"
         :columns="columns"
         :total="total"
         :current="pageNum"
@@ -27,7 +27,7 @@ export default {
   components: { AdvancedTable },
   mounted() {
     console.log(
-      "%cWOOHO~ If you see this I guess you are developer, thanks to eye on this :D",
+      "%cWOOHO~ If you see this I guess you are developer, thanks to eye on this project :D",
       "font-weight: bold;"
     );
     console.table(JSON.parse(JSON.stringify(DATA)));
@@ -48,7 +48,9 @@ export default {
         gender: {
           id: 3,
           label: "Gender",
-          minWidth: 12,
+          minWidth: 15,
+          filter: true,
+          filterType: 'attribute'
         },
         country: {
           id: 4,
@@ -75,7 +77,7 @@ export default {
           header: BronzeHeaderVue
         },
       },
-      total: null,
+      total: 20,
       isLoading: false,
       pageNum: 1,
       pageSize: 20,

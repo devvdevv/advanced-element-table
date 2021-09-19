@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import Demo from './demo/Demo.vue'
+import Demo from "./demo/Demo.vue";
 
 export default {
-  name: 'App',
-  components: {Demo}
-}
+  name: "App",
+  components: { Demo },
+};
 </script>

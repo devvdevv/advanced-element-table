@@ -1,3 +1,4 @@
+// These mock data are generated in https://www.mockaroo.com/
 export const DATA = [{
    "id": 1,
    "athlete_name": "Vinnie Casajuana",

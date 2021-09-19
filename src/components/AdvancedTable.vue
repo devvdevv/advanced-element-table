@@ -4,7 +4,7 @@ https://element.eleme.io/#/en-US/component/table
 
 %================================================
 %
-% author: Pham Bao Long
+% author: Pham Bao Long | devvdevv
 %
 %================================================
 
@@ -15,9 +15,10 @@ https://element.eleme.io/#/en-US/component/table
       element-loading-text="Loading..."
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.8)"
-      :data="rows"
+      :data="data"
       :border="d_border"
       style="width: 100%"
+      v-if="show"
     >
       <el-table-column
         v-for="(i, column) of columns"
@@ -37,15 +38,36 @@ https://element.eleme.io/#/en-US/component/table
           slot="header"
           v-if="columns[column].header !== null"
         >
-          <div
-            v-if="(typeof columns[column].formatter !== 'function')"
-            :is="columns[column].header"
-          >
-          </div>
-          <div
-            v-else
-            :formatter="columns[column].header"
-          >
+          <div style="display:flex">
+            <div
+              v-if="(typeof columns[column].header === 'object')"
+              :is="columns[column].header"
+            >
+            </div>
+            <div
+              v-else-if="(typeof columns[column].header === 'function')"
+              :formatter="columns[column].header"
+            >
+            </div>
+            <div v-else> {{ columns[column].label }}</div>
+            <div class="applied-tools">
+              <div class="filtered" v-if="columns[column].filtering">
+                <img src="../assets/filter.png" alt="filtered" width="10">
+              </div>
+            </div>
+            <div class="right-side">
+              <div
+                class="filter"
+                v-if="columns[column].filter && columns[column].filter === true">
+                <filter-box
+                  :filterType="columns[column].filterType"
+                  :column="columns[column]"
+                  :columnName="column"
+                  @onFiltering="onApplyFilter"
+                  @onCancel="onCancelFilter"
+                  ></filter-box>
+              </div>
+            </div>
           </div>
         </template>
         <template
@@ -76,8 +98,20 @@ https://element.eleme.io/#/en-US/component/table
   </div>
 </template>
 
-  <script>
+<style lang="css">
+.applied-tools {
+  padding-left: 3px;
+}
+.right-side {
+  margin-left: auto;
+}
+</style>
+
+<script>
+import FilterBox from './filters/FilterBox.vue';
+
 export default {
+  components: { FilterBox },
   props: [
     "rows",
     "columns",
@@ -92,21 +126,69 @@ export default {
   mounted() {},
   data() {
     return {
+      show: true,
       d_border: this.border ? this.border : false,
       d_background: this.p_background ? this.p_background : false,
       d_small: this.p_small ? this.p_small : false,
       d_pageSize: this.pageSize ? this.pageSize : 10,
+      d_rows: this.rows,
+      backupRows: this.rows,
     };
+  },
+  watch: {
+    rows: {
+      handler(newVal) {
+        this.d_rows = newVal;
+        this.backupRows = newVal;
+      }
+    }
   },
   computed: {
     isDataLoading() {
       return this.isLoading;
+    },
+    data: {
+      get: function() {
+        return this.d_rows;
+      },
+      set: function(data) {
+        this.d_rows = data;
+      }
     },
   },
   methods: {
     onPageChange(e) {
       this.$emit("onPageChange", e);
     },
+    onApplyFilter(column, value) {
+      this.columns[column].filtering = true;
+      this.filter(column, value);
+      this.forceRefresh();
+    },
+    onCancelFilter(column) {
+      this.columns[column].filtering = false;
+      this.unfilter();
+      this.forceRefresh();
+    },
+    // TODO: find better solution.
+    // hack here to render filter icon on header => NOT GOOD
+    forceRefresh() {
+      this.show = !this.show;
+      this.$nextTick(() => (this.show = true));
+    },
+    filter(property, val) {
+      this.backupRows = this.rows;
+      let filteredData = [];
+      for (let row of this.backupRows) {
+        if (row[property] === val) {
+          filteredData.push(row);
+        }
+      }
+      this.data = filteredData;
+    },
+    unfilter() {
+      this.data = this.backupRows;
+    }
   },
 };
 </script>
