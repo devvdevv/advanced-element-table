@@ -44,11 +44,15 @@ export default {
           id: 2,
           label: "Athlete",
           minWidth: 40,
+          filter: true,
+          filterType: 'string'
         },
         gender: {
           id: 3,
           label: "Gender",
-          minWidth: 12,
+          minWidth: 15,
+          filter: true,
+          filterType: 'attribute'
         },
         country: {
           id: 4,
@@ -75,7 +79,7 @@ export default {
           header: BronzeHeaderVue
         },
       },
-      total: null,
+      total: 20,
       isLoading: false,
       pageNum: 1,
       pageSize: 20,

@@ -37,15 +37,21 @@ https://element.eleme.io/#/en-US/component/table
           slot="header"
           v-if="columns[column].header !== null"
         >
-          <div
-            v-if="(typeof columns[column].formatter !== 'function')"
-            :is="columns[column].header"
-          >
-          </div>
-          <div
-            v-else
-            :formatter="columns[column].header"
-          >
+          <div style="display:flex">
+            <div
+              v-if="(typeof columns[column].header === 'object')"
+              :is="columns[column].header"
+            >
+            </div>
+            <div
+              v-else-if="(typeof columns[column].header === 'function')"
+              :formatter="columns[column].header"
+            >
+            </div>
+            <div v-else> {{ columns[column].label }}</div>
+            <div class="filter" v-if="columns[column].filter">
+              <fitler-box :filterType="columns[column].filterType"></fitler-box>
+            </div>
           </div>
         </template>
         <template
@@ -76,8 +82,17 @@ https://element.eleme.io/#/en-US/component/table
   </div>
 </template>
 
-  <script>
+<style lang="css">
+.filter {
+  margin-left: auto;
+}
+</style>
+
+<script>
+import FitlerBox from './filters/FitlerBox.vue';
+
 export default {
+  components: { FitlerBox },
   props: [
     "rows",
     "columns",
