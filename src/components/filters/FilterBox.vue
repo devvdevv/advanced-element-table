@@ -27,17 +27,7 @@
   </el-popover>
 </template>
 
-<style>
-.btns {
-  width: 180px;
-  margin: 10px auto 0 auto;
-}
 
-.btn {
-  width: 180px;
-  margin-top: 4px;
-}
-</style>
 
 <script>
 import AttributesFilterType from "./types/AttributesFilterType.vue";

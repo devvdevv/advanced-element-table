@@ -98,14 +98,6 @@ https://element.eleme.io/#/en-US/component/table
   </div>
 </template>
 
-<style>
-.applied-tools {
-  padding-left: 3px;
-}
-.right-side {
-  margin-left: auto;
-}
-</style>
 
 <script>
 import FilterBox from './filters/FilterBox.vue';
