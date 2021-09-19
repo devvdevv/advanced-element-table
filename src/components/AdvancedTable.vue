@@ -4,7 +4,7 @@ https://element.eleme.io/#/en-US/component/table
 
 %================================================
 %
-% author: Pham Bao Long
+% author: Pham Bao Long | devvdevv
 %
 %================================================
 
@@ -18,6 +18,7 @@ https://element.eleme.io/#/en-US/component/table
       :data="rows"
       :border="d_border"
       style="width: 100%"
+      v-if="show"
     >
       <el-table-column
         v-for="(i, column) of columns"
@@ -49,8 +50,23 @@ https://element.eleme.io/#/en-US/component/table
             >
             </div>
             <div v-else> {{ columns[column].label }}</div>
-            <div class="filter" v-if="columns[column].filter">
-              <fitler-box :filterType="columns[column].filterType"></fitler-box>
+            <div class="applied-tools">
+              <div class="filtered" v-if="columns[column].filtering">
+                <img src="../assets/filter.png" alt="filtered" width="10">
+              </div>
+            </div>
+            <div class="right-side">
+              <div
+                class="filter"
+                v-if="columns[column].filter && columns[column].filter === true">
+                <filter-box
+                  :filterType="columns[column].filterType"
+                  :column="columns[column]"
+                  :columnName="column"
+                  @onFiltering="onApplyFilter"
+                  @onCancel="onCancelFilter"
+                  ></filter-box>
+              </div>
             </div>
           </div>
         </template>
@@ -83,16 +99,19 @@ https://element.eleme.io/#/en-US/component/table
 </template>
 
 <style lang="css">
-.filter {
+.applied-tools {
+  padding-left: 3px;
+}
+.right-side {
   margin-left: auto;
 }
 </style>
 
 <script>
-import FitlerBox from './filters/FitlerBox.vue';
+import FilterBox from './filters/FilterBox.vue';
 
 export default {
-  components: { FitlerBox },
+  components: { FilterBox },
   props: [
     "rows",
     "columns",
@@ -111,6 +130,7 @@ export default {
       d_background: this.p_background ? this.p_background : false,
       d_small: this.p_small ? this.p_small : false,
       d_pageSize: this.pageSize ? this.pageSize : 10,
+      show: true,
     };
   },
   computed: {
@@ -122,6 +142,21 @@ export default {
     onPageChange(e) {
       this.$emit("onPageChange", e);
     },
+    onApplyFilter(column) {
+      this.columns[column].filtering = true;
+      this.forceRefresh();
+    },
+    onCancelFilter(column) {
+      this.columns[column].filtering = false;
+      console.log(this.columns[column]);
+      this.forceRefresh();
+    },
+    // TODO: find better solution.
+    // hack here to render filter icon => NOT GOOD
+    forceRefresh() {
+      this.show = !this.show;
+      this.$nextTick(() => (this.show = true));
+    }
   },
 };
 </script>

@@ -27,7 +27,7 @@ export default {
   components: { AdvancedTable },
   mounted() {
     console.log(
-      "%cWOOHO~ If you see this I guess you are developer, thanks to eye on this :D",
+      "%cWOOHO~ If you see this I guess you are developer, thanks to eye on this project :D",
       "font-weight: bold;"
     );
     console.table(JSON.parse(JSON.stringify(DATA)));
