@@ -98,7 +98,7 @@ https://element.eleme.io/#/en-US/component/table
   </div>
 </template>
 
-<style lang="css">
+<style>
 .applied-tools {
   padding-left: 3px;
 }

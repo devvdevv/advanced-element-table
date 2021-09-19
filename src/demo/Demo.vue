@@ -4,7 +4,7 @@
       <advanced-table
         :isLoading="isLoading"
         :border="false"
-        :rows.sync="rows"
+        :rows="rows"
         :columns="columns"
         :total="total"
         :current="pageNum"
@@ -19,9 +19,9 @@
 <script>
 import AdvancedTable from "../components/AdvancedTable.vue";
 import { DATA } from "./data";
-import BronzeHeaderVue from './headerRenderers/BronzeHeader.vue';
-import GoldHeaderVue from './headerRenderers/GoldHeader.vue';
-import SilverHeaderVue from './headerRenderers/SilverHeader.vue';
+import BronzeHeaderVue from './header-renderers/BronzeHeader.vue';
+import GoldHeaderVue from './header-renderers/GoldHeader.vue';
+import SilverHeaderVue from './header-renderers/SilverHeader.vue';
 import FlagRendererVue from "./renderers/FlagRenderer.vue";
 export default {
   components: { AdvancedTable },

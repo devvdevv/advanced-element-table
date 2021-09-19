@@ -1,7 +1,7 @@
 <template>
   <el-popover
     placement="bottom"
-    title="Filter (in development...)"
+    title="Filter (developing, just 4 view)"
     width="200"
     trigger="manual"
     v-model="visible"
@@ -17,7 +17,7 @@
       ></attributes-filter-type>
       <div class="btns">
         <div class="btn">
-          <el-button class="apply btn" type="primary" size="medium" @click="apply()" :disabled="value == null">Apply</el-button>
+          <el-button class="apply btn" type="primary" size="medium" @click="apply()" :disabled="!value">Apply</el-button>
         </div>
         <div class="btn" v-if="column.filtering && column.filtering === true">
           <el-button class="reset btn" @click="reset()" size="medium" plain>Reset</el-button>
@@ -27,7 +27,7 @@
   </el-popover>
 </template>
 
-<style lang="css">
+<style>
 .btns {
   width: 180px;
   margin: 10px auto 0 auto;
