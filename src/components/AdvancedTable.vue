@@ -15,7 +15,7 @@ https://element.eleme.io/#/en-US/component/table
       element-loading-text="Loading..."
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.8)"
-      :data="rows"
+      :data="data"
       :border="d_border"
       style="width: 100%"
       v-if="show"
@@ -126,36 +126,68 @@ export default {
   mounted() {},
   data() {
     return {
+      show: true,
       d_border: this.border ? this.border : false,
       d_background: this.p_background ? this.p_background : false,
       d_small: this.p_small ? this.p_small : false,
       d_pageSize: this.pageSize ? this.pageSize : 10,
-      show: true,
+      d_rows: this.rows,
+      backupRows: this.rows,
     };
+  },
+  watch: {
+    rows: {
+      handler(newVal) {
+        this.d_rows = newVal;
+        this.backupRows = newVal;
+      }
+    }
   },
   computed: {
     isDataLoading() {
       return this.isLoading;
+    },
+    data: {
+      get: function() {
+        return this.d_rows;
+      },
+      set: function(data) {
+        this.d_rows = data;
+      }
     },
   },
   methods: {
     onPageChange(e) {
       this.$emit("onPageChange", e);
     },
-    onApplyFilter(column) {
+    onApplyFilter(column, value) {
       this.columns[column].filtering = true;
+      this.filter(column, value);
       this.forceRefresh();
     },
     onCancelFilter(column) {
       this.columns[column].filtering = false;
-      console.log(this.columns[column]);
+      this.unfilter();
       this.forceRefresh();
     },
     // TODO: find better solution.
-    // hack here to render filter icon => NOT GOOD
+    // hack here to render filter icon on header => NOT GOOD
     forceRefresh() {
       this.show = !this.show;
       this.$nextTick(() => (this.show = true));
+    },
+    filter(property, val) {
+      this.backupRows = this.rows;
+      let filteredData = [];
+      for (let row of this.backupRows) {
+        if (row[property] === val) {
+          filteredData.push(row);
+        }
+      }
+      this.data = filteredData;
+    },
+    unfilter() {
+      this.data = this.backupRows;
     }
   },
 };

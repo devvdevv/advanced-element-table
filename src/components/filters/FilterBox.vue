@@ -1,7 +1,7 @@
 <template>
   <el-popover
     placement="bottom"
-    title="Filter (developing, just 4 view)"
+    title="Filter (in development...)"
     width="200"
     trigger="manual"
     v-model="visible"
@@ -13,10 +13,11 @@
       <string-filter-type v-if="filterType === 'string'"></string-filter-type>
       <attributes-filter-type
         v-else-if="filterType === 'attribute'"
+        @onChange="onChange"
       ></attributes-filter-type>
       <div class="btns">
         <div class="btn">
-          <el-button class="apply btn" type="primary" size="medium" @click="apply()">Apply</el-button>
+          <el-button class="apply btn" type="primary" size="medium" @click="apply()" :disabled="value == null">Apply</el-button>
         </div>
         <div class="btn" v-if="column.filtering && column.filtering === true">
           <el-button class="reset btn" @click="reset()" size="medium" plain>Reset</el-button>
@@ -47,14 +48,18 @@ export default {
   data() {
     return {
       visible: false,
+      value: null,
     };
   },
   methods: {
     apply() {
-      this.$emit("onFiltering", this.columnName); 
+      this.$emit("onFiltering", this.columnName, this.value); 
     },
     reset() {
       this.$emit("onCancel", this.columnName); 
+    },
+    onChange(val) {
+      this.value = val;
     }
   }
 };

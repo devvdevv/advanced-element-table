@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-select v-model="value" filterable placeholder="Select">
+    <el-select v-model="value" @change="onChange" filterable placeholder="Select">
       <el-option
         v-for="item in options"
         :key="item.value"
@@ -29,5 +29,10 @@ export default {
       value: "",
     };
   },
+  methods: {
+    onChange(val) {
+      this.$emit("onChange", val);
+    }
+  }
 };
 </script>

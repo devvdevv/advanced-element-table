@@ -4,7 +4,7 @@
       <advanced-table
         :isLoading="isLoading"
         :border="false"
-        :rows="rows"
+        :rows.sync="rows"
         :columns="columns"
         :total="total"
         :current="pageNum"
@@ -44,8 +44,6 @@ export default {
           id: 2,
           label: "Athlete",
           minWidth: 40,
-          filter: true,
-          filterType: 'string'
         },
         gender: {
           id: 3,

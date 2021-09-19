@@ -1,6 +1,10 @@
 <template>
   <div>
-    <el-input placeholder="Please input" v-model="input"></el-input>
+    <el-input
+      placeholder="Please input"
+      v-model="input"
+      @change="onChange"
+    ></el-input>
   </div>
 </template>
 
@@ -10,6 +14,9 @@ export default {
     return {
       input: "",
     };
+  },
+  methods: {
+    onChange() {},
   },
 };
 </script>
